@@ -33,8 +33,8 @@ const uint16_t PROGMEM wf_combo[] = {KC_W, KC_F, COMBO_END};
 const uint16_t PROGMEM commadot_combo[] = {KC_COMMA, KC_DOT, COMBO_END};
 const uint16_t PROGMEM xc_combo[] = {KC_X, KC_C, COMBO_END};
 combo_t key_combos[] = {
-    COMBO(uy_combo, KC_BSPC),
-    COMBO(wf_combo, KC_ESC),
-    COMBO(commadot_combo, KC_ENTER),
-    COMBO(xc_combo, KC_TAB),
+	COMBO(uy_combo, KC_BSPC),
+	COMBO(wf_combo, KC_ESC),
+	COMBO(commadot_combo, KC_ENTER),
+	COMBO(xc_combo, KC_TAB),
 };
