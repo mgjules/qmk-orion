@@ -1,11 +1,11 @@
 #include QMK_KEYBOARD_H
 
 enum custom_keycodes {
-    UNDO = SAFE_RANGE,
-    CUT,
-    COPY,
-    PASTE,
-    SAVE,
+    USR_UNDO = SAFE_RANGE,
+    USR_CUT,
+    USR_COPY,
+    USR_PASTE,
+    USR_SAVE,
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -24,7 +24,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[2] = LAYOUT_split_3x5_2(
 		KC_ESC,			QK_RBT,			KC_VOLD,		KC_MUTE,		KC_VOLU,			KC_PGUP,		KC_HOME,		KC_UP,			KC_END,			KC_INS,
 		KC_LCTL,		KC_LALT,		KC_LGUI,		KC_LSFT,		KC_TAB,				KC_PGDN,		KC_LEFT,		KC_DOWN,		KC_RGHT,		KC_DEL,
-		UNDO,			CUT,			COPY,			PASTE,			SAVE,		    	        QK_REP,			KC_ENT,		 	KC_PSCR,		KC_SCRL,		KC_BSPC,
+		USR_UNDO,		USR_CUT,		USR_COPY,		USR_PASTE,		USR_SAVE,		    QK_REP,			KC_ENT,		 	KC_PSCR,		KC_SCRL,		KC_BSPC,
 											KC_TRNS,		KC_TRNS,			KC_TRNS,		MO(3)
     ),
 	[3] = LAYOUT_split_3x5_2(
@@ -46,53 +46,62 @@ combo_t key_combos[] = {
 	COMBO(xc_combo, KC_TAB),
 };
 
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    os_variant_t os = detected_host_os();
-    uint16_t mod;
-    switch (os) {
-    case OS_MACOS:
-    case OS_IOS:
-        mod = KC_LGUI;
-    default:
-        mod = KC_LCTL;
-    }
-
+void process_platform_combo(uint16_t keycode, keyrecord_t *record) {
+  os_variant_t host_os = detected_host_os();
+  uint16_t keycode_to_press = KC_NO;
+  if (host_os == OS_MACOS || host_os == OS_IOS) {
     switch (keycode) {
-    case UNDO:
-        if (record->event.pressed) {
-            register_code(mod);
-            tap_code(KC_Z);
-            unregister_code(mod);
-        }
+      case USR_UNDO:
+        keycode_to_press = G(KC_Z);
         break;
-    case CUT:
-        if (record->event.pressed) {
-            register_code(mod);
-            tap_code(KC_X);
-            unregister_code(mod);
-        }
+      case USR_CUT:
+        keycode_to_press = G(KC_X);
         break;
-    case COPY:
-        if (record->event.pressed) {
-            register_code(mod);
-            tap_code(KC_C);
-            unregister_code(mod);
-        }
+      case USR_COPY:
+        keycode_to_press = G(KC_C);
         break;
-    case PASTE:
-        if (record->event.pressed) {
-            register_code(mod);
-            tap_code(KC_V);
-            unregister_code(mod);
-        }
+      case USR_PASTE:
+        keycode_to_press = G(KC_V);
         break;
-    case SAVE:
-        if (record->event.pressed) {
-            register_code(mod);
-            tap_code(KC_S);
-            unregister_code(mod);
-        }
+      case USR_SAVE:
+        keycode_to_press = G(KC_S);
         break;
+    }
+  } else {
+    switch (keycode) {
+      case USR_UNDO:
+        keycode_to_press = C(KC_Z);
+        break;
+      case USR_CUT:
+        keycode_to_press = C(KC_X);
+        break;
+      case USR_COPY:
+        keycode_to_press = C(KC_C);
+        break;
+      case USR_PASTE:
+        keycode_to_press = C(KC_V);
+        break;
+      case USR_SAVE:
+        keycode_to_press = C(KC_S);
+        break;
+    }
+  }
+  if (record->event.pressed) {
+    register_code16(keycode_to_press);
+  } else {
+    unregister_code16(keycode_to_press);
+  }
+}
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+    case USR_UNDO:
+    case USR_CUT:
+    case USR_COPY:
+    case USR_PASTE:
+    case USR_SAVE:
+        process_platform_combo(keycode, record);
+        return false;
     }
 
     return true;
