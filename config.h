@@ -4,6 +4,8 @@
 
 #define USB_SUSPEND_WAKEUP_DELAY 2000
 
+#define EE_HANDS
+
 #undef SPLIT_USB_DETECT
 #define USB_VBUS_PIN 19U
 
