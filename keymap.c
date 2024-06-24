@@ -13,7 +13,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		KC_Q,			KC_W,			KC_F,			KC_P,			KC_B,				KC_J,			KC_L,			KC_U,			KC_Y,			KC_QUOT,
 		KC_A,			KC_R,			KC_S,			KC_T,			KC_G,				KC_M,			KC_N,			KC_E,			KC_I,			KC_O,
 		KC_Z,			KC_X,			KC_C,			KC_D,			KC_V,				KC_K,			KC_H,			KC_COMM,		KC_DOT,			KC_SLSH,
-											MO(2),			KC_SPC,			    KC_LSFT,		MO(1)
+											MO(2),			KC_SPC,			        KC_LSFT,		MO(1)
     ),
 	[1] = LAYOUT_split_3x5_2(
 		KC_EXLM,		KC_AT,			KC_HASH,		KC_DLR,			KC_PERC,			KC_CIRC,		KC_AMPR,		KC_ASTR,		KC_TRNS,		KC_TRNS,
@@ -24,7 +24,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[2] = LAYOUT_split_3x5_2(
 		KC_ESC,			QK_RBT,			KC_VOLD,		KC_MUTE,		KC_VOLU,			KC_PGUP,		KC_HOME,		KC_UP,			KC_END,			KC_INS,
 		KC_LCTL,		KC_LALT,		KC_LGUI,		KC_LSFT,		KC_TAB,				KC_PGDN,		KC_LEFT,		KC_DOWN,		KC_RGHT,		KC_DEL,
-		UNDO,		    CUT,		    COPY,		    PASTE,		    SAVE,		    	QK_REP,			KC_ENT,		 	KC_PSCR,		KC_SCRL,		KC_BSPC,
+		UNDO,			CUT,			COPY,			PASTE,			SAVE,		    	        QK_REP,			KC_ENT,		 	KC_PSCR,		KC_SCRL,		KC_BSPC,
 											KC_TRNS,		KC_TRNS,			KC_TRNS,		MO(3)
     ),
 	[3] = LAYOUT_split_3x5_2(
